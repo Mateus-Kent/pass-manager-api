@@ -1,0 +1,38 @@
+{
+ "env": {
+   "es6": true,
+   "node": true
+ },
+ "extends": ["plugin:@typescript-eslint/recommended", "eslint:recommended", "prettier"],
+ "parser": "@typescript-eslint/parser",
+ "parserOptions": {
+   "ecmaVersion": 2017,
+   "sourceType": "module"
+ },
+ "plugins": [
+   "@typescript-eslint/eslint-plugin",
+   "prettier",
+   "eslint-plugin-import",
+   "eslint-plugin-import-helpers"
+ ],
+ "rules": {
+   "block-spacing": ["error", "always"],
+
+   "prettier/prettier": "error",
+
+   "import-helpers/order-imports": [
+     "error",
+     {
+       "newlinesBetween": "always",
+       "groups": ["/^react/", "module", ["parent", "sibling", "index"]],
+       "alphabetize": { "order": "asc", "ignoreCase": true }
+     }
+   ],
+
+   "@typescript-eslint/no-explicit-any": "warn",
+   "@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "next" }],
+   "@typescript-eslint/no-non-null-assertion": "off",
+
+   "no-unused-vars": "warn"
+ }
+}

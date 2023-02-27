@@ -1,0 +1,12 @@
+services:
+  postgres:
+    image: postgres:14-alpine3.14
+    environment:
+      POSTGRES_USER: ${DATABASE_USER}
+      POSTGRES_PASSWORD: ${DATABASE_PASS}
+      POSTGRES_DB: ${DATABASE_NAME}
+      PG_DATA: /var/lib/postgresql/data
+    volumes:
+      - /var/lib/postgresql/data
+    ports:
+      - '6222:5432'
