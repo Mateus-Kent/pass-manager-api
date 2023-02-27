@@ -13,7 +13,8 @@ const envSchema = z.object({
  PORT: z
   .string()
   .min(1, "A env 'PORT' da sala é necessário.")
-  .transform(value => Number(value))
+  .transform(value => Number(value)),
+ DATABASE_URL: z.string().min(1, "A env 'DATABASE_URL' da sala é necessário.")
 })
 
 const _env = envSchema.safeParse(process.env)
