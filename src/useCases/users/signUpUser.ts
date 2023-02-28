@@ -5,13 +5,13 @@ import { tokenHelper } from '../../helpers/tokenHelper'
 import * as UserService from '../../models/user'
 
 export async function signUpUser(req: Request, res: Response) {
- const { name, email, decryptedPassword } = req.body
+ const { email, username, decryptedPassword } = req.body
 
  const password = await hashHelper.hash(decryptedPassword)
 
- const user = await UserService.createUser(name, email, password)
+ const user = await UserService.createUser(email, username, password)
 
- const token = tokenHelper.generate(user.id)
+ const token = tokenHelper.generate(String(user.id))
 
  return res.status(201).json({ user, token })
 }
