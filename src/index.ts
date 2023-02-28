@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 import cors from 'cors'
+import 'express-async-errors'
 import express, { NextFunction, Request, Response } from 'express'
 
 import { env } from './env'

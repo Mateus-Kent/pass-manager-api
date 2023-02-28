@@ -1,2 +1,5 @@
 export * from './signUpUser'
 export * from './signInUser'
+export * from './deleteUser'
+export * from './getUser'
+export * from './getUsers'

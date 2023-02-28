@@ -14,7 +14,7 @@ export async function createUser(username: string, email: string, password: stri
  return await prisma.user.create({ data: { username, email, password } })
 }
 
-export async function updateUser(id: number, username: string, email: string) {
+export async function updateUser(id: number, username?: string, email?: string) {
  return await prisma.user.update({ where: { id }, data: { username, email } })
 }
 
