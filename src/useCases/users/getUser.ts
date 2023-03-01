@@ -10,6 +10,6 @@ export async function getUser(req: Request, res: Response) {
  if (user) {
   res.status(202).json(user)
  } else {
-  res.status(404).json({ error: 'User not found' })
+  res.status(404).json({ error: 'Usuário não encontrado' })
  }
 }

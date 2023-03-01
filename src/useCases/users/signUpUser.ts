@@ -5,11 +5,17 @@ import { tokenHelper } from '../../helpers/tokenHelper'
 import * as UserService from '../../models/user'
 
 export async function signUpUser(req: Request, res: Response) {
- const { email, username, decryptedPassword } = req.body
+ const { email, username, password } = req.body
 
- const password = await hashHelper.hash(decryptedPassword)
+ const userAlreadyExists = await UserService.getUserById({ email })
 
- const user = await UserService.createUser(email, username, password)
+ if (userAlreadyExists) {
+  return res.status(400).json('Esse email já está em uso')
+ }
+
+ const hashedPassword = await hashHelper.hash(password)
+
+ const user = await UserService.createUser({ email, username, password: hashedPassword })
 
  const token = tokenHelper.generate(String(user.id))
 
