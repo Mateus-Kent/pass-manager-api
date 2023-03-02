@@ -24,7 +24,7 @@ model Credentials {
  id                 Int     @id @default(autoincrement())
  emailCredential    String?
  usernameCredential String?
- credential         String
+ credentialPassword String
  websiteName        String
  websiteUrl         String?
  user               User    @relation(fields: [userId], references: [id])

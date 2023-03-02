@@ -2,7 +2,7 @@ import crypto from 'crypto'
 
 import { env } from '../env'
 
-class CryptoHelper {
+export class CryptoHelper {
  private static readonly algorithm = 'aes-256-cbc'
  private static readonly iv = crypto.randomBytes(16)
  private static readonly secretKey = env.ENCRYPTION_KEY
@@ -24,5 +24,3 @@ class CryptoHelper {
   return decrypted.toString()
  }
 }
-
-export const cryptoHelper = new CryptoHelper()
