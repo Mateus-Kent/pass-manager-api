@@ -1,26 +1,35 @@
-import crypto from 'crypto'
+import { randomBytes, createCipheriv, createDecipheriv } from 'crypto'
 
 import { env } from '../env'
 
 export class CryptoHelper {
- private static readonly algorithm = 'aes-256-cbc'
- private static readonly iv = crypto.randomBytes(16)
+ private static readonly algorithm = 'aes-256-gcm'
+ private static readonly ivLength = 12
  private static readonly secretKey = env.ENCRYPTION_KEY
 
- public static encrypt(text: string): string {
-  const cipher = crypto.createCipheriv(this.algorithm, this.secretKey, this.iv)
-  const encrypted = Buffer.concat([cipher.update(text), cipher.final()])
+ public static encrypt(text: string) {
+  const iv = randomBytes(this.ivLength)
+  const cipher = createCipheriv(this.algorithm, this.secretKey, iv)
 
-  return `${this.iv.toString('hex')}:${encrypted.toString('hex')}`
+  const encrypted = Buffer.concat([cipher.update(text, 'utf8'), cipher.final()])
+
+  const tag = cipher.getAuthTag()
+
+  return `${iv.toString('hex')}:${encrypted.toString('hex')}:${tag.toString('hex')}`
  }
 
- public static decrypt(encryptedText: string): string {
-  const [ivHex, encryptedHex] = encryptedText.split(':')
+ public static decrypt(encryptedText: string) {
+  const [ivHex, encryptedHex, tagHex] = encryptedText.split(':')
+
   const iv = Buffer.from(ivHex, 'hex')
   const encrypted = Buffer.from(encryptedHex, 'hex')
-  const decipher = crypto.createDecipheriv(this.algorithm, this.secretKey, iv)
+  const tag = Buffer.from(tagHex, 'hex')
+
+  const decipher = createDecipheriv(this.algorithm, this.secretKey, iv)
+  decipher.setAuthTag(tag)
+
   const decrypted = Buffer.concat([decipher.update(encrypted), decipher.final()])
 
-  return decrypted.toString()
+  return decrypted.toString('utf8')
  }
 }
