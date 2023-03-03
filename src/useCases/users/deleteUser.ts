@@ -8,8 +8,8 @@ export async function deleteUser(req: Request, res: Response) {
  const user = await UserService.deleteUser(id)
 
  if (user) {
-  res.status(200).send()
+  return res.status(200).send()
  } else {
-  res.status(404).json({ error: 'Usuário não encontrado' })
+  return res.status(404).json({ error: 'Usuário não encontrado' })
  }
 }

@@ -8,8 +8,8 @@ export async function getUser(req: Request, res: Response) {
  const user = await UserService.getUserById({ id })
 
  if (user) {
-  res.status(202).json(user)
+  return res.status(202).json(user)
  } else {
-  res.status(404).json({ error: 'Usuário não encontrado' })
+  return res.status(404).json({ error: 'Usuário não encontrado' })
  }
 }
