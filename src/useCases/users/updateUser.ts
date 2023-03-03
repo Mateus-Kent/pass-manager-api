@@ -4,7 +4,7 @@ import { hashHelper } from '../../helpers/hashHelper'
 import * as UserService from '../../models/user'
 
 export async function updateUser(req: Request, res: Response) {
- const id = parseInt(req.params.id)
+ const id = Number(req.params.id)
 
  const { username, email, password } = req.body
 
