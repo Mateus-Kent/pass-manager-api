@@ -2,10 +2,8 @@ import express, { NextFunction, Request, Response } from 'express'
 
 import { authMiddleware } from '../middlewares/authMiddleware'
 import { validate } from '../middlewares/validatorMiddleware'
-import { signUpUser, signInUser, getUser, getUsers, deleteUser } from '../useCases/users'
-import { updateUser } from '../useCases/users/updateUser'
-import { createUserSchema } from '../validators/createUserValidator'
-import { updateUserSchema } from '../validators/updateUserValidator'
+import { signUpUser, signInUser, getUser, getUsers, updateUser, deleteUser } from '../useCases/users'
+import { createUserSchema, updateUserSchema } from '../validators'
 
 export const userRouter = express.Router()
 
