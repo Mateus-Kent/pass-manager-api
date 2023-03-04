@@ -10,13 +10,13 @@ export async function signInUser(req: Request, res: Response) {
  const user = await UserService.getUserById({ email })
 
  if (!user) {
-  return res.status(404).json({ message: 'Usuário não encontrado' })
+  return res.status(404).json({ error: 'Usuário não encontrado' })
  }
 
  const isValidPassword = await hashHelper.compare(password, user.password)
 
  if (!isValidPassword) {
-  return res.status(401).json({ message: 'A senha está incorreta' })
+  return res.status(401).json({ error: 'A senha está incorreta' })
  }
 
  const token = tokenHelper.generate(String(user.id))

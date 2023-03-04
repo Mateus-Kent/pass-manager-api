@@ -6,11 +6,11 @@ interface TokenPayload {
 }
 
 class TokenHelper {
- generate(userId: string) {
+ public generate(userId: string) {
   return jwt.sign({ sub: { userId } }, env.JWT_SECRET, { expiresIn: '1d' })
  }
 
- verify(token: string) {
+ public verify(token: string) {
   const payload = jwt.verify(token, env.JWT_SECRET) as JwtPayload
 
   if (!payload.sub) {

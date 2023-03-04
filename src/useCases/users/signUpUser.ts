@@ -10,7 +10,7 @@ export async function signUpUser(req: Request, res: Response) {
  const userAlreadyExists = await UserService.getUserById({ email })
 
  if (userAlreadyExists) {
-  return res.status(400).json('Esse email já está em uso')
+  return res.status(409).json({ error: 'Esse email já está em uso' })
  }
 
  const hashedPassword = await hashHelper.hash(password)

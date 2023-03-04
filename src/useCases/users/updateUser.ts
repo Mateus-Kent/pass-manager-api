@@ -11,7 +11,7 @@ export async function updateUser(req: Request, res: Response) {
  const user = await UserService.getUserById({ id })
 
  if (!user) {
-  return res.status(404).json('Esse usuário não existe')
+  return res.status(404).json({ erro: 'Esse usuário não existe' })
  }
 
  const userExists = await UserService.findFirstUser({
@@ -22,7 +22,7 @@ export async function updateUser(req: Request, res: Response) {
 
  if (userExists) {
   if (userExists.email === email) {
-   return res.status(400).json('Esse email já está em uso')
+   return res.status(409).json({ error: 'Esse email já está em uso' })
   }
  }
 
