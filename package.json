@@ -3,10 +3,14 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "engines": {
+   "node": "18"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "env-cmd tsx --watch src/index.ts",
-    "build": "tsup src/index.ts"
+    "build": "tsup src/index.ts",
+    "start": "env-cmd node dist/index.js"
   },
   "keywords": [],
   "author": "",
