@@ -10,7 +10,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "env-cmd tsx --watch src/index.ts",
     "build": "tsup src/index.ts",
-    "start": "env-cmd node dist/index.js"
+    "start": "env-cmd -f ./config/dev.env node dist/index.js"
   },
   "keywords": [],
   "author": "",
