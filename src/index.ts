@@ -2,9 +2,12 @@
 import cors from 'cors'
 import 'express-async-errors'
 import express, { NextFunction, Request, Response } from 'express'
+import fs from 'fs'
 
 import { env } from './env'
 import { router } from './routes/routes'
+
+console.log(fs.readdirSync(process.cwd()))
 
 const app = express()
 
