@@ -26,7 +26,11 @@ credentialRouter.get(
  getCredentialsByUser
 )
 
-credentialRouter.get('/getCredential/:id', getCredentialById)
+credentialRouter.get(
+ '/getCredential/:id',
+ (req: Request, res: Response, next: NextFunction) => authMiddleware.execute(req, res, next),
+ getCredentialById
+)
 
 credentialRouter.put(
  '/updateCredential/:id',
