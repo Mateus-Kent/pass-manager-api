@@ -27,7 +27,7 @@ model Credentials {
  credentialPassword String
  websiteName        String
  websiteUrl         String?
- user               User     @relation(fields: [userId], references: [id])
+ user               User     @relation(fields: [userId], references: [id], onUpdate: Cascade, onDelete: Cascade)
  userId             Int
  createdAt          DateTime @default(now())
  updatedAt          DateTime @updatedAt
