@@ -1,5 +1,6 @@
 import { Request, Response } from 'express'
 
+import { getFieldsWithSameValues } from '../../helpers/getFildsSameValuesHelper'
 import { hashHelper } from '../../helpers/hashHelper'
 import { tokenHelper } from '../../helpers/tokenHelper'
 import * as UserService from '../../models/user'
@@ -10,7 +11,14 @@ export async function signUpUser(req: Request, res: Response) {
  const userAlreadyExists = await UserService.getUserById({ email })
 
  if (userAlreadyExists) {
-  return res.status(409).json({ error: 'Esse email já está em uso' })
+  const fields = getFieldsWithSameValues({
+   useCaseFields: { email: 'este email já está em uso' },
+   payloads: {
+    incoming: { email, username, password },
+    stored: userAlreadyExists
+   }
+  })
+  return res.status(409).json({ error: fields })
  }
 
  const hashedPassword = await hashHelper.hash(password)
