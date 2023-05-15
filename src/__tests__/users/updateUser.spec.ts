@@ -9,19 +9,27 @@ const prisma = new PrismaClient()
 
 describe('updateUser', () => {
  beforeAll(async () => {
-  await prisma.user.create({
-   data: {
+  await prisma.user.delete({ where: {} })
+
+  await prisma.user.upsert({
+   create: {
     username: 'john.doe@example.com',
     email: 'john.doe@example.com',
     password: faker.internet.password(),
     createdAt: new Date(),
     updatedAt: new Date()
+   },
+   update: {
+    username: 'aaaaaa',
+    updatedAt: new Date()
+   },
+   where: {
+    email: 'john.doe@example.com'
    }
   })
  })
 
  afterAll(async () => {
-  await prisma.user.deleteMany({ where: {} })
   await prisma.$disconnect()
  })
 

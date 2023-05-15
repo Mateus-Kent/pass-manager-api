@@ -7,26 +7,36 @@ import { deleteUser } from '../../models/user'
 
 const prisma = new PrismaClient()
 
+const email = faker.internet.email()
+
 describe('deleteUser', () => {
  beforeAll(async () => {
-  await prisma.user.create({
-   data: {
+  await prisma.user.delete({ where: {} })
+
+  await prisma.user.upsert({
+   create: {
     username: 'john.doe@example.com',
-    email: 'john.doe@example.com',
+    email: email,
     password: faker.internet.password(),
     createdAt: new Date(),
     updatedAt: new Date()
+   },
+   update: {
+    username: 'aaaaaa',
+    updatedAt: new Date()
+   },
+   where: {
+    email: 'john.doe@example.com'
    }
   })
  })
 
  afterAll(async () => {
-  await prisma.user.deleteMany()
   await prisma.$disconnect()
  })
 
  test('Excluir um usuário existente', async () => {
-  const user = await prisma.user.findUnique({ where: { email: 'john.doe@example.com' } })
+  const user = await prisma.user.findUnique({ where: { email: email } })
 
   if (!user) {
    throw new Error('Usuário não encontrado')
