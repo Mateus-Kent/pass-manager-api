@@ -1,32 +1,26 @@
 # Estágio 1: Compilar a aplicação
 FROM node:18-alpine AS build
 
-WORKDIR /app
+# COPY package.json and package-lock.json files
+COPY package*.json ./
 
-COPY package.json package-lock.json ./
+# generated prisma files
+COPY prisma ./prisma/
 
-RUN npm ci
+# COPY ENV variable
+COPY .env ./
 
+# COPY tsconfig.json file
+COPY tsconfig.json ./
+
+# COPY
 COPY . .
 
-RUN npm run build
-
-# Gerar código do Prisma
+RUN npm install
 RUN npx prisma generate
 
-# Estágio 2: Executar a aplicação
-FROM node:18-alpine
-
-WORKDIR /app
-
-# Copiar as variáveis de ambiente do estágio de compilação
-COPY --from=build /app/.env ./
-
-COPY --from=build /app/package.json /app/package-lock.json ./
-COPY --from=build /app/dist ./dist
-
-RUN npm ci
-
+# Run and expose the server on port 3000
 EXPOSE 3000
 
-CMD ["node", "./dist/index.js"]
+# A command to start the server
+CMD npm start
